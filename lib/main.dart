@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mydailyguide/new_item_view.dart';
+import 'package:mydailyguide/todo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root of my application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,6 +27,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Todo> list = List<Todo>();
+  SharedPreferences sharedPreferences;
+
+  @override
+  void initState() {
+    initSharedPreferences();
+    super.initState();
+  }
+
+  initSharedPreferences()async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    loadData();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,28 +119,33 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       item.complete = !item.complete;
     });
+    saveData();
   }
 
   void removeItem(Todo item){
     list.remove(item);
     if(list.isEmpty) setState(() {});
+    saveData();
   }
 
   void addTodo(Todo item){
     list.add(item);
+    saveData();
   }
 
   void editTodo(Todo item, String title){
     item.title = title;
+    saveData();
   }
-}
 
-class Todo {
-  String title;
-  bool complete;
+  void saveData(){
+    List<String> spList = list.map((item) => jsonEncode(item.toMap())).toList();
+    sharedPreferences.setStringList('list', spList);
+  }
 
-  Todo({
-    this.title,
-    this.complete = false,
-  });
+  void loadData(){
+    List<String> spList = sharedPreferences.getStringList('list');
+    list = spList.map((item) => Todo.fromMap(jsonDecode(item))).toList();
+    setState(() {});
+  }
 }
