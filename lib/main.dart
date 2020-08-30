@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
     initSharedPreferences();
     super.initState();
   }
-
+  //Data Persistence using Shared Preferences
   initSharedPreferences()async {
     sharedPreferences = await SharedPreferences.getInstance();
     loadData();
@@ -49,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: list.isNotEmpty ? buildBody() : buildEmptyBody(),
+      //Add a FloatingActionButton to go to new item view
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => goToNewItemView(),
@@ -72,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   //Item Property
   Widget buildItem(Todo item){
+    //Use Dismissible to delete the item
     return Dismissible(
       key: Key(item.hashCode.toString()),
       onDismissed: (direction) => removeItem(item),
@@ -116,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if(title != null) editTodo(item, title);
     });
   }
-  //mark a task as accomplished
+  //Item complete action
   void setCompleteness(Todo item){
     setState(() {
       item.complete = !item.complete;

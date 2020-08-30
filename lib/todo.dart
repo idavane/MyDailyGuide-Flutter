@@ -1,4 +1,4 @@
-//Create a new TodoItem
+//Create a new TodoClass
 class Todo {
   String title;
   bool complete;
