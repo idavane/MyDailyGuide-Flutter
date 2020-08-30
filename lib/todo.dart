@@ -1,3 +1,4 @@
+//Create a new TodoItem
 class Todo {
   String title;
   bool complete;

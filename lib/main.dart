@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
+  //Body Property
   Widget buildBody(){
     return ListView.builder(
       itemCount: list.length,
@@ -64,13 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
   }
-
+  //show a message when a list empty
   Widget buildEmptyBody(){
     return Center(
       child: Text('No Tasks'),
     );
   }
-
+  //Item Property
   Widget buildItem(Todo item){
     return Dismissible(
       key: Key(item.hashCode.toString()),
@@ -86,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+
   Widget buildListTile(Todo item){
     return ListTile(
       title: Text(item.title),
@@ -94,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
       onLongPress: () => goToEditItemView(item),
     );
   }
-
+  //Route to create a new Item
   void goToNewItemView(){
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context){
@@ -105,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  //Route to edit a Item
   void goToEditItemView(Todo item){
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context){
@@ -114,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if(title != null) editTodo(item, title);
     });
   }
-
+  //mark a task as accomplished
   void setCompleteness(Todo item){
     setState(() {
       item.complete = !item.complete;
@@ -122,27 +124,32 @@ class _MyHomePageState extends State<MyHomePage> {
     saveData();
   }
 
+  //Remove Item
   void removeItem(Todo item){
     list.remove(item);
     if(list.isEmpty) setState(() {});
     saveData();
   }
 
+  //Add an Item
   void addTodo(Todo item){
     list.add(item);
     saveData();
   }
 
+  //Edit an Item
   void editTodo(Todo item, String title){
     item.title = title;
     saveData();
   }
 
+  //Save Item List
   void saveData(){
     List<String> spList = list.map((item) => jsonEncode(item.toMap())).toList();
     sharedPreferences.setStringList('list', spList);
   }
 
+  //Reload Item List
   void loadData(){
     List<String> spList = sharedPreferences.getStringList('list');
     list = spList.map((item) => Todo.fromMap(jsonDecode(item))).toList();

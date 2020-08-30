@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Create a new Item
 class NewItemView extends StatefulWidget {
   final String title;
 
@@ -18,6 +19,7 @@ class _NewItemViewState extends State<NewItemView> {
     super.initState();
   }
 
+  //View Property
   @override
   Widget build(BuildContext context) {
     return Scaffold(
