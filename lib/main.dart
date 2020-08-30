@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MyDailyGuide'),
+        title: Text('MyDailyGuide'),//Title of App
         centerTitle: true,
       ),
       body: list.isNotEmpty ? buildBody() : buildEmptyBody(),
