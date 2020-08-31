@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-  //Body Property
+  //Add an new Item
   Widget buildBody(){
     return ListView.builder(
       itemCount: list.length,
